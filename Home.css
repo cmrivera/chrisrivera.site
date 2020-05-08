@@ -1,0 +1,179 @@
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: black;
+}
+.button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: black;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: green;
+  color: red;
+}
+a {
+  background-color: green; /* Green */
+  border: none;
+  color: blue;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+a:hover {
+  background-color: yellow;
+  color: red;
+}
+
+.button1 {
+  // border-radius: 2px;
+  border-radius: 8px;
+}
+.button2 {
+  //border-radius: 4px;
+  border-radius: 50%;
+}
+.button3 {
+  border-radius: 8px;
+}
+
+.button5 {
+  border-radius: 50%;
+}
+
+/*First, position the curtain panels so that they are not only side-by-side, but also in front of the prize itself.*/
+
+/*the parent component or the main container */
+.curtain {
+  width: 100vw; /*Ensures the parent component is full screen width */
+  height: 100vh; /*vh is "viewport height" and at CSS Tricks, they we're using this for demo purposes. This property constrains he parent component to the height of the viewport*/
+  overflow: hidden; /* Allows us to slide the panels outside the container without them showing */
+}
+/*the component wrapper set to fill up within the parent container*/
+.curtain__wrapper {
+  width: 100%;
+  height: 100%;
+}
+/*the curtain panel class that is attribued next to the curtain_panel-left and curtain_panel-right in the html div*/
+.curtain__panel {
+  background: green; /*sets the color of the curtain*/
+  width: 50%; /* Each panel takes up half the container */
+  height: 100vh; /* vh is "viewport height" */
+  float: left; /* Makes sure panels are side-by-side */
+  position: relative; /* Needed to define the z-index -- A relative positioned element is positioned relative to its normal position.*/
+  z-index: 2; /* The z-index property specifies the stack order of an element. An element with greater stack order is always in front of an element with a lower stack order. So, this places the panels in front of the prize */
+  transition: all 5s ease-out; /* Animates the sliding transition of the panels -- about the transition property, this is the short-hand property used to represent up to four transition-related longhand properties:
+  transition: [transition-property] [transition-duration] [transition-timing-function] [transition-delay] */
+  /* For this assignment, I am changing the transition duration to 5s. It will take 5s to animate or open and close the curtain.
+  /* I am going to use flexbox property to display the h1 element on the curtain in the center */
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+/*Sliding the panels out by using transform property
+The transform property allows you to rotate, scale, move, skew elements.
+Here, we are using the value of translateX, which Defines a translation using only the value for the X-axis, because we want to slide open and close horizontally
+If I want, I could change the value of translateY, which defines a translation using the value for the Y-axis, and will make it open and close vertically.
+We set the value at -100% and 100%, because we want to slide or close the curtain completely out of the curtain component
+/*Slide the panel to the left out of the container */
+.curtain__panel--left {
+  display: flex;
+  justify-content: flex-end;
+  transform: translateX(-60%);
+}
+/*Slide the panel to the right out of the container */
+.curtain__panel--right {
+  display: flex;
+  justify-content: flex-start;
+  transform: translateX(60%);
+}
+/* For this assignment, I changed the transform property to translateY(-100%) to make the curtain open up vertically. However, this caused both sides of the curtain slided up at the same time, so it looked like one giant block going up, and not two panels. 
+Instead, I kept the transform property to translateX, but I changed how far the panels opened up to -40% and 40%. I can see better how the two panel curtains work with this transition.*/
+.curtain__prize {
+  background: #333;
+  color: green;
+  padding: 1rem 0;
+  position: absolute; /* Forces the prize position into the container start */
+  text-align: center;
+  z-index: 1; /* Places the prize behind the panels, which are z-index 2 */
+  width: 100%;
+  height: 100vh; /* I am setting the height of this container the same height as the curtain. */
+}
+.curtain__prize img {
+  width: 15%;
+}
+
+/*make the checkbox both invisible and take up the entire space of our curtain component. We want the entire curtain to be clickable and this will allow us to do just that.*/
+/*sidenote: this is an element, not a div or class or id 
+Attribute selectors can be useful for styling forms without class or ID
+css syntax is:
+selector[attribute=value]
+So, this input[type=checkbox] selects all elements with a title attribute that contains a value of checkbox */
+input[type="checkbox"] {
+  position: absolute; /* Force the checkbox at the start of the container */
+  cursor: pointer; /* Indicate the curtain is clickable */
+  width: 100%; /* The checkbox is as wide as the component */
+  height: 100%; /* The checkbox is as tall as the component */
+  z-index: 100; /* Make sure the checkbox is on top of everything else */
+  opacity: 0; /* Hide the checkbox */
+}
+/* When the checkbox is checked... */
+
+/* Slide the first panel in */
+input[type="checkbox"]:checked ~ div.curtain__panel--left {
+  transform: translateX(0);
+}
+
+/* Slide the second panel in */
+input[type="checkbox"]:checked ~ div.curtain__panel--right {
+  transform: translateX(0);
+}
+
+/*contact form css */
+/* Style inputs with type="text", select elements and textareas */
+input[type="text"],
+select,
+textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
